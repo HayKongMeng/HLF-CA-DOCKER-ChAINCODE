@@ -1,5 +1,8 @@
 
 export FABRIC_CFG_PATH=${PWD}/config
+
+export CC_NAME_V="asset-transfer-3"
+
 export PEER0_ORG1_CA=${PWD}/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
 export PEER0_ORG2_CA=${PWD}/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
 
@@ -15,7 +18,7 @@ peer chaincode invoke -o localhost:7050 \
     --ordererTLSHostnameOverride orderer.example.com \
     --tls true \
     --cafile $ORDERER_CA \
-    -C mychannel -n asset-transfer \
+    -C mychannel -n ${CC_NAME_V} \
     --peerAddresses localhost:7051 \
     --tlsRootCertFiles $PEER0_ORG1_CA \
     --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA \

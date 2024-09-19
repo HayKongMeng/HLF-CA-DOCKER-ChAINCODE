@@ -1,6 +1,7 @@
- export FABRIC_CFG_PATH=${PWD}/config
- 
- 
-#  peer chaincode package ./chaincode/go/ccpack.out -n asset-transfer -p ./chaincode/go -v 1.2 -s -S
+export FABRIC_CFG_PATH=${PWD}/config 
+export CC_NAME_V="asset-transfer-3"
 
- peer chaincode signpackage ccwith1sig.pak ccwith2sig.pak
+export CORE_PEER_MSPCONFIGPATH=${PWD}/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+
+rm ./chaincode/go/asset-transfer.tar.gz
+peer lifecycle chaincode package ./chaincode/go/asset-transfer.tar.gz --path ./chaincode/go --lang golang --label ${CC_NAME_V}

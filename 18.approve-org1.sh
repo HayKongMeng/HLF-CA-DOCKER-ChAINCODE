@@ -1,5 +1,5 @@
 export FABRIC_CFG_PATH=${PWD}/config
-export CC_NAME="asset-transfer"
+export CC_NAME_V="asset-transfer-3"
 export ORDERER_CA=${PWD}/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 export CHANNEL_NAME=mychannel
 export SEQUENCE="1"
@@ -11,7 +11,7 @@ export CORE_PEER_ADDRESS=localhost:7051
 
 
 
-PACKAGE_ID=$(sed -n "/asset_transfer_v1/{s/^Package ID: //; s/, Label:.*$//; p;}" log.txt)
+PACKAGE_ID=$(sed -n "/${CC_NAME_V}/{s/^Package ID: //; s/, Label:.*$//; p;}" log.txt)
 echo PackageID is ${PACKAGE_ID}
 
 # peer lifecycle chaincode approveformyorg -o localhost:7050 \
@@ -28,12 +28,11 @@ echo PackageID is ${PACKAGE_ID}
 
 peer lifecycle chaincode approveformyorg -o localhost:7050 \
         --ordererTLSHostnameOverride orderer.example.com --tls \
-        --cafile $ORDERER_CA --channelID $CHANNEL_NAME --name ${CC_NAME} \
+        --cafile $ORDERER_CA --channelID $CHANNEL_NAME --name ${CC_NAME_V} \
         --version 1 --init-required --package-id ${PACKAGE_ID} \
         --sequence 1
 
 
-export CC_NAME="asset-transfer"
 export ORDERER_CA=${PWD}/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 export CHANNEL_NAME=mychannel
 export SEQUENCE="1"
@@ -46,6 +45,6 @@ export CORE_PEER_ADDRESS=localhost:9051
 
 peer lifecycle chaincode approveformyorg -o localhost:7050 \
         --ordererTLSHostnameOverride orderer.example.com --tls \
-        --cafile $ORDERER_CA --channelID $CHANNEL_NAME --name ${CC_NAME} \
+        --cafile $ORDERER_CA --channelID $CHANNEL_NAME --name ${CC_NAME_V} \
         --version 1 --init-required --package-id ${PACKAGE_ID} \
         --sequence 1

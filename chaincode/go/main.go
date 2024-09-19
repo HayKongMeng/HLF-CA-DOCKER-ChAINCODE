@@ -38,6 +38,30 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) 
     return nil
 }
 
+
+func (s *SmartContract) TransferAsset(ctx contractapi.TransactionContextInterface, id string, newOwner string) (string, error) {
+	asset, err := s.ReadAsset(ctx, id)
+	if err != nil {
+		return "", err
+	}
+
+	oldOwner := asset.Owner
+	asset.Owner = newOwner
+
+	assetJSON, err := json.Marshal(asset)
+	if err != nil {
+		return "", err
+	}
+
+	err = ctx.GetStub().PutState(id, assetJSON)
+	if err != nil {
+		return "", err
+	}
+
+	return oldOwner, nil
+}
+
+
 // AssetExists checks if an asset exists in the world state by asset ID.
 func (s *SmartContract) AssetExists(ctx contractapi.TransactionContextInterface, id string) (bool, error) {
     assetJSON, err := ctx.GetStub().GetState(id)
@@ -104,10 +128,8 @@ func (s *SmartContract) UpdateAssetOwner(ctx contractapi.TransactionContextInter
         return err
     }
 
-    // Update the owner field
     asset.Owner = newOwner
 
-    // Marshal the updated asset and put it back into the world state
     updatedAssetJSON, err := json.Marshal(asset)
     if err != nil {
         return err
