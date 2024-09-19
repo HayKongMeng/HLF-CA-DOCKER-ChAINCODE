@@ -1,0 +1,1 @@
+cryptogen showtemplate > cryptogen-config.yaml

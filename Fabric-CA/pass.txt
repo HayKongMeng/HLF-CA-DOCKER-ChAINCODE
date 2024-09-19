@@ -1,0 +1,6 @@
+caname                  password    peer    user    org
+-----------------------------------------------------------
+ca.org1.example.com     peer0pw     peer0
+ca.org1.example.com     peer1pw     peer1
+ca.org1.example.com     user1pw             user1
+ca.org1.example.com     org1adminpw                 org1admin
