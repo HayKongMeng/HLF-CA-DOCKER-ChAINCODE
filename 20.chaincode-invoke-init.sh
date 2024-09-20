@@ -1,6 +1,6 @@
 export FABRIC_CFG_PATH=${PWD}/config
 
-export CC_NAME_V="asset-transfer-3"
+export CC_NAME_V="asset-transfer-4"
 
 export PEER0_ORG1_CA=${PWD}/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
 export PEER0_ORG2_CA=${PWD}/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt

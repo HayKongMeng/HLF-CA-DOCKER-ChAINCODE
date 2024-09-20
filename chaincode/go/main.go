@@ -111,6 +111,36 @@ func (s *SmartContract) QueryAsset(ctx contractapi.TransactionContextInterface, 
     return &asset, nil
 }
 
+func (s *SmartContract) GetHistory(ctx contractapi.TransactionContextInterface, id string) ([]Asset, error) {
+    resultsIterator, err := ctx.GetStub().GetHistoryForKey(id)
+    if err != nil {
+        return nil, fmt.Errorf("failed to get history for asset %s: %v", id, err)
+    }
+    defer resultsIterator.Close()
+
+    var history []Asset
+    for resultsIterator.HasNext() {
+        queryResponse, err := resultsIterator.Next()
+        if err != nil {
+            return nil, fmt.Errorf("failed to get next history item: %v", err)
+        }
+
+        var asset Asset
+        if queryResponse.IsDelete {
+            asset = Asset{ID: id, Value: "", Owner: ""}
+        } else {
+            err = json.Unmarshal(queryResponse.Value, &asset)
+            if err != nil {
+                return nil, fmt.Errorf("failed to unmarshal history item: %v", err)
+            }
+        }
+
+        // Add the asset to the history
+        history = append(history, asset)
+    }
+
+    return history, nil
+}
 
 // UpdateAssetOwner updates the owner of the specified asset
 func (s *SmartContract) UpdateAssetOwner(ctx contractapi.TransactionContextInterface, id string, newOwner string) error {

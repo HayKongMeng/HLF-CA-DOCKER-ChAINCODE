@@ -1,5 +1,5 @@
 export FABRIC_CFG_PATH=${PWD}/config
-export CC_NAME_V="asset-transfer-3"
+export CC_NAME_V="asset-transfer-4"
 export ORDERER_CA=${PWD}/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 export CHANNEL_NAME=mychannel
 export SEQUENCE="1"
